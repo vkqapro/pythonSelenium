@@ -1,0 +1,9 @@
+services:
+  e2e:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/automation
+    working_dir: /automation
+    command: /bin/sh -c "ls -ls && pytest -m health"
