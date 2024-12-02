@@ -3,7 +3,6 @@ allure-python-commons==2.13.5
 attrs==24.2.0
 certifi==2024.8.30
 charset-normalizer==3.4.0
-env==0.1.0
 h11==0.14.0
 idna==3.10
 iniconfig==2.0.0
@@ -13,6 +12,7 @@ pluggy==1.5.0
 pyotp==2.9.0
 PySocks==1.7.1
 pytest==8.3.3
+python-dotenv==1.0.1
 requests==2.32.3
 selenium==4.27.1
 setuptools==75.3.0
