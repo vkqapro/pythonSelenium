@@ -18,8 +18,8 @@ class TestUIRegression(BaseTest):
     @pytest.fixture(scope='function', autouse=True)
     def driver(self, request):
         options = Options()
-        # options.add_argument("--no-sandbox")
-        # options.add_argument("--disable-dev-shm-usage")
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
         options.add_argument("--disable-extensions")
         options.add_argument("--headless")
         driver = webdriver.Chrome(options=options)
@@ -42,6 +42,6 @@ class TestUIRegression(BaseTest):
             log.info('The element is not found')
 
         finally:
-            time.sleep(5)
-            log.info(driver.current_url.title())
+            time.sleep(3)
+            assert driver.find_element(By.XPATH, self.SCC.HREF).is_displayed()
             # assert driver.current_url == self.SCC.HOME_URL
