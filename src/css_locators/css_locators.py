@@ -10,4 +10,7 @@ class SccLocators(object):
         PASSWORD_FIELD = "//input[@id='password']"
         LOGIN_BUTTON = "//button[@id='login-submit']"
         CONTINUE_WITHOUT_2STEP_BUTTON = "//span[contains(text(), 'Continue without two-step verification')]"
+        CANT_USE_LINK = "//span[contains(text(),'use your security key?')]"
+        RECOVERY_CODE = "//input[@id='recoveryCode-uid2']"
+        SIX_OTP_CODE_FIELD = "//body/div[@id='root']/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/section[1]/div[2]/div[1]/div[1]/div[1]/form[1]/div[2]/div[1]/input[1]"
 
