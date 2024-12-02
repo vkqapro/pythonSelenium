@@ -9,17 +9,21 @@ from selenium.webdriver.support import expected_conditions as EC
 import logging as log
 import time
 import pyotp
+from dotenv import load_dotenv
+import os
 
-USER_EMAIL = "vkqa.pro@gmail.com"
-USER_PASSWORD = "Byu773$!"
-RECUVERY24 = "KZFBER8VEXHCSWY4ITJC5J0E"
-SECRET_KEY = "GRDFU4BAI4ZEK4KHJUSE2K2CHJITEQLM"
+load_dotenv()
+SECRET_KEY = os.getenv('SECRET_KEY')
+USER_EMAIL = os.getenv('USER_EMAIL')
+USER_PASSWORD = os.getenv('USER_PASSWORD')
 
 class TestUIRegression(BaseTest):
+
+
     @pytest.fixture(scope='function', autouse=True)
     def driver(self, request):
         options = Options()
-        options.add_argument("--headless")
+        # options.add_argument("--headless")
         driver = webdriver.Chrome(options=options)
         yield driver
         driver.quit()
