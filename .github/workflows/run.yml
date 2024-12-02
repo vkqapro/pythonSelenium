@@ -1,8 +1,7 @@
 name: Health Check Run
 
 on:
-  schedule:
-    - cron: '15,30 13,17 * * *'
+  push:
 
 jobs:
   ui-trello-automation:
