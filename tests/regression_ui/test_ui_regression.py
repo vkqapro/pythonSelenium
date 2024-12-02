@@ -18,8 +18,8 @@ class TestUIRegression(BaseTest):
     @pytest.fixture(scope='function', autouse=True)
     def driver(self, request):
         options = Options()
-        options.add_argument("--no-sandbox")
-        options.add_argument("--disable-dev-shm-usage")
+        # options.add_argument("--no-sandbox")
+        # options.add_argument("--disable-dev-shm-usage")
         options.add_argument("--disable-extensions")
         options.add_argument("--headless")
         driver = webdriver.Chrome(options=options)

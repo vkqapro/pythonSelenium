@@ -1,7 +1,8 @@
 name: Health Check Run
 
 on:
-  push:
+  deployment_status: null
+
 
 jobs:
   ui-trello-automation:
