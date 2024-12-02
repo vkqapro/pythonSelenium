@@ -30,14 +30,14 @@ jobs:
 
     - name: Install ChromeDriver
       run: |
-        CHROME_IN_PATH=$(which google-chrome)
-        CHROME_BIN_DIR=$(dirname $CHROME_IN_PATH)
-        CHROME_VER=$($CHROME_IN_PATH --product-version)
-        CHROME_DRIVER_VER=$(curl --location --request GET 'https://chromedriver.storage.googleapis.com/LATEST_RELEASE_'$CHROME_VER)
-        curl "https://chromedriver.storage.googleapis.com/${CHROME_DRIVER_VER}/chromedriver_linux64.zip" -O
-        unzip chromedriver_linux64.zip -d $CHROME_BIN_DIR
-        rm chromedriver_linux64.zip
-        sudo chmod +x $CHROME_BIN_DIR/chromedriver
+       CHROME_IN_PATH=$(which google-chrome)
+       CHROME_BIN_DIR=$(dirname $CHROME_IN_PATH)
+       CHROME_VER=$($CHROME_IN_PATH --product-version | cut -d'.' -f-3)
+       CHROME_DRIVER_VER=$(curl --location --request GET "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VER")
+       curl "https://chromedriver.storage.googleapis.com/${CHROME_DRIVER_VER}/chromedriver_linux64.zip" -O
+       unzip chromedriver_linux64.zip -d $CHROME_BIN_DIR
+       rm chromedriver_linux64.zip
+       sudo chmod +x $CHROME_BIN_DIR/chromedriver
 
     - name: Run tests
       run: |
