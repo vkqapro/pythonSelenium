@@ -8,7 +8,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
+
+    - name: Checkout (copy) gh-pages repository to GitHub runner
+      uses: actions/checkout@v4
+      with:
+        ref: gh-pages
+        path: ./.github/gh-pages
 
     - name: Setup Python
       uses: actions/setup-python@v2
@@ -36,11 +42,31 @@ jobs:
         CHROME_DRIVER_VER=$(curl --location --request GET "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VER")
         echo "Chrome Driver Version: $CHROME_DRIVER_VER"
 
-
     - name: Run tests
       env:
         USER_EMAIL: ${{ secrets.USER_EMAIL }}
         USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
       run: |
-        pytest -m TC001
+        pytest -m TC001 --alluredir allure-results
+
+    - name: Copy history fro gh-pages to Alullure-results
+      run: |
+        sudo mkdir -p allure-results/history
+        sudo cp -R ./.githun/gh-pages/history/* allure-results/history/
+
+    - name: Generate Allure-report
+      run: |
+        sudo allure generate allure-results --clean -o allure-report
+
+    - name: Update Allure-report/history
+      run: |
+        sudo cp -R allure-report/history/* ./.github/gh-pages/history/
+
+    - name: Deploy to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@4.1.5
+      with:
+        token: ${{ secrets.CI_TOKEN }}
+        branch: gh-pages
+        folder: allure-report
+        clean: true

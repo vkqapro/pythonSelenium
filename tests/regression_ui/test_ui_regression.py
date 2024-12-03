@@ -11,6 +11,7 @@ import time
 import pyotp
 from dotenv import load_dotenv
 import os
+import allure
 
 load_dotenv()
 SECRET_KEY = os.getenv('SECRET_KEY')
@@ -18,8 +19,6 @@ USER_EMAIL = os.getenv('USER_EMAIL')
 USER_PASSWORD = os.getenv('USER_PASSWORD')
 
 class TestUIRegression(BaseTest):
-
-
     @pytest.fixture(scope='function', autouse=True)
     def driver(self, request):
         options = Options()
@@ -34,25 +33,36 @@ class TestUIRegression(BaseTest):
         return totp.now()
 
     @pytest.mark.TC001
+    @allure.title('Login Functionality')
     def test_login(self, driver):
-        driver.get(self.SCC.URL_LOGIN)
-        try:
-            el_user_name = WebDriverWait(driver, 60).until(EC.element_to_be_clickable((By.XPATH, self.SCC.LoginPage.USER_NAME_FIELD)))
-            el_user_name.click()
-            el_user_name.send_keys(USER_EMAIL)
-            driver.find_element(By.XPATH, self.SCC.LoginPage.CONTINUE_BUTTON).click()
-            el_password = WebDriverWait(driver, 60).until(EC.element_to_be_clickable((By.XPATH, self.SCC.LoginPage.PASSWORD_FIELD)))
-            el_password.click()
-            el_password.send_keys(USER_PASSWORD)
-            driver.find_element(By.XPATH, self.SCC.LoginPage.LOGIN_BUTTON).click()
-            el_six_otp_code = WebDriverWait(driver, 60).until(EC.element_to_be_clickable((By.XPATH, self.SCC.LoginPage.SIX_OTP_CODE_FIELD)))
-            el_six_otp_code.click()
-            el_six_otp_code.send_keys(self.otp_auth())
-            # driver.find_element(By.XPATH, self.SCC.LoginPage.LOGIN_BUTTON).click()
-        except:
-            log.info('The element is not found')
+        with allure.step('Navigate to the Trello login page'):
+            driver.get(self.SCC.URL_LOGIN)
+        with allure.step('Enter valid credentials (email, password, and 6-digits verification code)'):
+            try:
+                el_user_name = WebDriverWait(driver, 60).until(EC.element_to_be_clickable(
+                    (By.XPATH, self.SCC.LoginPage.USER_NAME_FIELD)
+                ))
+                el_user_name.click()
+                el_user_name.send_keys(USER_EMAIL)
 
-        finally:
-            time.sleep(10)
-            assert driver.find_element(By.XPATH, self.SCC.HREF).is_displayed()
+                driver.find_element(By.XPATH, self.SCC.LoginPage.CONTINUE_BUTTON).click()
+                el_password = WebDriverWait(driver, 60).until(EC.element_to_be_clickable(
+                    (By.XPATH, self.SCC.LoginPage.PASSWORD_FIELD)
+                ))
+                el_password.click()
+                el_password.send_keys(USER_PASSWORD)
+
+                driver.find_element(By.XPATH, self.SCC.LoginPage.LOGIN_BUTTON).click()
+                el_six_otp_code = WebDriverWait(driver, 60).until(EC.element_to_be_clickable(
+                    (By.XPATH, self.SCC.LoginPage.SIX_OTP_CODE_FIELD)
+                ))
+                el_six_otp_code.click()
+                el_six_otp_code.send_keys(self.otp_auth())
+            except Exception as e:
+                log.info("An error occurred: ", str(e))
+            finally:
+                time.sleep(10)
+                assert driver.find_element(By.XPATH, self.SCC.HREF).is_displayed()
+        with allure.step('Verifying that the user is redirected to their dashboard'):
             assert driver.current_url == self.SCC.HOME_URL
+            log.info(f"The user's home url is: {driver.current_url}")
