@@ -50,10 +50,10 @@ jobs:
       run: |
         pytest -m TC001 --alluredir allure-results
 
-    - name: Copy history fro gh-pages to Alullure-results
+    - name: Copy history from gh-pages to Alullure-results
       run: |
         sudo mkdir -p allure-results/history
-        sudo cp -R ./.githun/gh-pages/history/* allure-results/history/
+        sudo cp -R ./.github/gh-pages/history/* allure-results/history/
 
     - name: Generate Allure-report
       run: |
