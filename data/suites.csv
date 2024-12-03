@@ -1,2 +1,2 @@
 "DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","13670","Login Functionality","tests.regression_ui","Tue Dec 03 02:36:51 UTC 2024","passed","Tue Dec 03 02:37:04 UTC 2024","TestUIRegression","test_ui_regression","",""
+"","13760","Login Functionality","tests.regression_ui","Tue Dec 03 02:38:49 UTC 2024","passed","Tue Dec 03 02:39:03 UTC 2024","TestUIRegression","test_ui_regression","",""
