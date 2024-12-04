@@ -1,1 +1,1 @@
-[{"uid":"b65891e676d08059","name":"Login Functionality","time":{"start":1733194351872,"stop":1733194365193,"duration":13321},"status":"passed","severity":"normal"}]
+[{"uid":"88427480d8cc0b91","name":"Board Creation","time":{"start":1733281354615,"stop":1733281373185,"duration":18570},"status":"passed","severity":"normal"},{"uid":"a8c023e2982f90be","name":"Login Functionality","time":{"start":1733281340759,"stop":1733281354224,"duration":13465},"status":"passed","severity":"normal"}]
