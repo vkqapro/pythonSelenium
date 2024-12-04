@@ -18,6 +18,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 USER_EMAIL = os.getenv('USER_EMAIL')
 USER_PASSWORD = os.getenv('USER_PASSWORD')
 
+@pytest.mark.TC000
 class TestUIRegression(BaseTest):
     @pytest.fixture(scope='function', autouse=True)
     def driver(self, request):
@@ -27,14 +28,13 @@ class TestUIRegression(BaseTest):
         yield driver
         driver.quit()
 
-    @pytest.mark.TC000
     def otp_auth(self):
         totp = pyotp.TOTP(SECRET_KEY)
         return totp.now()
 
     @pytest.mark.TC001
     @allure.title('Login Functionality')
-    def test_login(self, driver):
+    def test_login(self, driver) -> None:
         with allure.step('Navigate to the Trello login page'):
             driver.get(self.SCC.URL_LOGIN)
         with allure.step('Enter valid credentials (email, password, and 6-digits verification code)'):
@@ -66,3 +66,22 @@ class TestUIRegression(BaseTest):
         with allure.step('Verifying that the user is redirected to their dashboard'):
             assert driver.current_url == self.SCC.HOME_URL
             log.info(f"The user's home url is: {driver.current_url}")
+
+    @pytest.mark.TC002
+    @allure.title('Board Creation')
+    def test_board_creation(self, driver) -> None:
+        with allure.step('Log in to Trello'):
+            self.test_login(driver)
+            time.sleep(2)
+        with allure.step('Create a new board'):
+            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.SCC.HomePage.CREATE_BUTTON))).click()
+            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.SCC.HomePage.CREATE_BOARD_BUTTON))).click()
+            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.SCC.HomePage.BLUE_BKG_BUTTON))).click()
+            el_new_board_name = driver.find_element(By.XPATH, self.SCC.HomePage.NEW_BOARD_NAME_FIELD)
+            el_new_board_name.click()
+            el_new_board_name.send_keys('new_board')
+            driver.find_element(By.XPATH, self.SCC.HomePage.CREATE_SUBMIT_BUTTON).click()
+        with allure.step("Validating that the new board is created and available in the user's dashboard"):
+            el_new_board = WebDriverWait(driver, 60).until(EC.visibility_of_element_located((By.XPATH, "//h1[contains(text(),'new_board')]"))).text
+            assert el_new_board == 'new_board'
+            log.info(f"New board's name is: {el_new_board}")
