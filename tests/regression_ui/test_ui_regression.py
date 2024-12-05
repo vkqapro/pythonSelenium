@@ -19,12 +19,13 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 USER_EMAIL = os.getenv('USER_EMAIL')
 USER_PASSWORD = os.getenv('USER_PASSWORD')
 
-@pytest.mark.TC000
+
+
 class TestUIRegression(BaseTest):
     @pytest.fixture(scope='function', autouse=True)
     def driver(self, request):
         options = Options()
-        options.add_argument("--headless")
+        # options.add_argument("--headless")
         driver = webdriver.Chrome(options=options)
         yield driver
         driver.quit()
@@ -33,6 +34,7 @@ class TestUIRegression(BaseTest):
         totp = pyotp.TOTP(SECRET_KEY)
         return totp.now()
 
+    @pytest.mark.TC000
     @pytest.mark.TC001
     @allure.title('Login Functionality')
     def test_login(self, driver) -> None:
@@ -68,6 +70,7 @@ class TestUIRegression(BaseTest):
             assert driver.current_url == self.SCC.HOME_URL
             log.info(f"The user's home url is: {driver.current_url}")
 
+    @pytest.mark.TC000
     @pytest.mark.TC002
     @allure.title('Board Creation')
     def test_board_creation(self, driver) -> None:
@@ -87,6 +90,7 @@ class TestUIRegression(BaseTest):
             assert el_new_board == 'new_board'
             log.info(f"New board's name is: {el_new_board}")
 
+    @pytest.mark.TC000
     @pytest.mark.TC003
     @allure.title('List Creation')
     def test_list_creation(self, driver):
