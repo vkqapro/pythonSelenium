@@ -90,7 +90,7 @@ class TestUIRegression(BaseTest):
             assert el_new_board == 'new_board'
             log.info(f"New board's name is: {el_new_board}")
 
-    @pytest.mark.TC000
+    # @pytest.mark.TC000
     @pytest.mark.TC003
     @allure.title('List Creation')
     def test_list_creation(self, driver):
