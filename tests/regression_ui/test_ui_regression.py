@@ -6,6 +6,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import NoSuchElementException
 import logging as log
 import time
 import pyotp
@@ -23,7 +24,7 @@ class TestUIRegression(BaseTest):
     @pytest.fixture(scope='function', autouse=True)
     def driver(self, request):
         options = Options()
-        options.add_argument("--headless")
+        # options.add_argument("--headless")
         driver = webdriver.Chrome(options=options)
         yield driver
         driver.quit()
@@ -85,3 +86,29 @@ class TestUIRegression(BaseTest):
             el_new_board = WebDriverWait(driver, 60).until(EC.visibility_of_element_located((By.XPATH, "//h1[contains(text(),'new_board')]"))).text
             assert el_new_board == 'new_board'
             log.info(f"New board's name is: {el_new_board}")
+
+    @pytest.mark.TC003
+    @allure.title('List Creation')
+    def test_list_creation(self, driver):
+        self.test_login(driver)
+        WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH, self.SCC.Board.BOARD_TITLE))).click()
+        time.sleep(2)
+        try:
+            driver.find_element(By.XPATH, self.SCC.Board.ADD_A_LIST_BUTTON).click()
+            driver.find_element(By.XPATH, self.SCC.Board.ENTER_LIST_NAME_FIELD).click()
+            driver.find_element(By.XPATH, self.SCC.Board.ENTER_LIST_NAME_FIELD).send_keys('new_list')
+            driver.find_element(By.XPATH, self.SCC.Board.ADD_LIST_SUBMIT_BUTTON).click()
+            assert driver.find_element(By.XPATH, self.SCC.Board.LIST_TITLE).text == "new_list"
+            log.info(f"the name of the new list is: {driver.find_element(By.XPATH, self.SCC.Board.LIST_TITLE).text}")
+
+        except NoSuchElementException:
+            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.SCC.Board.ADD_ANOTHER_LIST_BUTTON))).click()
+            driver.find_element(By.XPATH, self.SCC.Board.ENTER_LIST_NAME_FIELD).click()
+            driver.find_element(By.XPATH, self.SCC.Board.ENTER_LIST_NAME_FIELD).send_keys('new_list')
+            driver.find_element(By.XPATH, self.SCC.Board.ADD_LIST_SUBMIT_BUTTON).click()
+            assert driver.find_element(By.XPATH, self.SCC.Board.LIST_TITLE).text == "new_list"
+            log.info(f"the name of the new list is: {driver.find_element(By.XPATH, self.SCC.Board.LIST_TITLE).text}")
+        time.sleep(4)
+
+
+
