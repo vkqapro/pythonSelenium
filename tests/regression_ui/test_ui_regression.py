@@ -26,6 +26,9 @@ class TestUIRegression(BaseTest):
     def driver(self, request):
         options = Options()
         options.add_argument("--headless")
+        options.add_argument("--start-maximized")
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-gpu")
         driver = webdriver.Chrome(options=options)
         yield driver
         driver.quit()
@@ -56,26 +59,26 @@ class TestUIRegression(BaseTest):
                 el_password.send_keys(USER_PASSWORD)
 
                 driver.find_element(By.XPATH, self.SCC.LoginPage.LOGIN_BUTTON).click()
+                time.sleep(3)
                 el_six_otp_code = WebDriverWait(driver, 60).until(EC.element_to_be_clickable(
                     (By.XPATH, self.SCC.LoginPage.SIX_OTP_CODE_FIELD)
                 ))
                 el_six_otp_code.click()
                 el_six_otp_code.send_keys(self.otp_auth())
+                WebDriverWait(driver, 30).until(EC.url_matches(self.SCC.HOME_URL))
+                log.info(f"The user's home url is: {driver.current_url}")
+                assert driver.current_url == self.SCC.HOME_URL
+
             except Exception as e:
                 log.info("An error occurred: ", str(e))
-            finally:
-                time.sleep(1)
-                # assert driver.find_element(By.XPATH, self.SCC.HREF).is_displayed()
-        with allure.step('Verifying that the user is redirected to their dashboard'):
-            # assert driver.current_url == self.SCC.HOME_URL
-            log.info(f"The user's home url is: {driver.current_url}")
+
 
 
     @pytest.mark.TC000
     @pytest.mark.TC002
     @allure.title('Board Creation')
     def test_board_creation(self, driver):
-        time.sleep(3)
+        time.sleep(10)
         with allure.step('Log in to Trello'):
             self.test_login(driver)
             time.sleep(2)
@@ -96,7 +99,7 @@ class TestUIRegression(BaseTest):
     @pytest.mark.TC003
     @allure.title('List Creation')
     def test_list_creation(self, driver):
-        time.sleep(3)
+        time.sleep(10)
         self.test_login(driver)
         WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH, self.SCC.Board.BOARD_TITLE))).click()
         time.sleep(2)
