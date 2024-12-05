@@ -25,7 +25,7 @@ class TestUIRegression(BaseTest):
     @pytest.fixture(scope='function', autouse=True)
     def driver(self, request):
         options = Options()
-        options.add_argument("--headless")
+        # options.add_argument("--headless")
         driver = webdriver.Chrome(options=options)
         yield driver
         driver.quit()
@@ -37,7 +37,7 @@ class TestUIRegression(BaseTest):
     @pytest.mark.TC000
     @pytest.mark.TC001
     @allure.title('Login Functionality')
-    def test_login(self, driver) -> None:
+    def test_login(self, driver):
         with allure.step('Navigate to the Trello login page'):
             driver.get(self.SCC.URL_LOGIN)
         with allure.step('Enter valid credentials (email, password, and 6-digits verification code)'):
@@ -67,13 +67,15 @@ class TestUIRegression(BaseTest):
                 time.sleep(1)
                 # assert driver.find_element(By.XPATH, self.SCC.HREF).is_displayed()
         with allure.step('Verifying that the user is redirected to their dashboard'):
-            # assert driver.current_url == self.SCC.HOME_URL
+            assert driver.current_url == self.SCC.HOME_URL
             log.info(f"The user's home url is: {driver.current_url}")
+
 
     @pytest.mark.TC000
     @pytest.mark.TC002
     @allure.title('Board Creation')
-    def test_board_creation(self, driver) -> None:
+    def test_board_creation(self, driver):
+        time.sleep(3)
         with allure.step('Log in to Trello'):
             self.test_login(driver)
             time.sleep(2)
@@ -94,6 +96,7 @@ class TestUIRegression(BaseTest):
     @pytest.mark.TC003
     @allure.title('List Creation')
     def test_list_creation(self, driver):
+        time.sleep(3)
         self.test_login(driver)
         WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH, self.SCC.Board.BOARD_TITLE))).click()
         time.sleep(2)
@@ -102,8 +105,9 @@ class TestUIRegression(BaseTest):
             driver.find_element(By.XPATH, self.SCC.Board.ENTER_LIST_NAME_FIELD).click()
             driver.find_element(By.XPATH, self.SCC.Board.ENTER_LIST_NAME_FIELD).send_keys('new_list')
             driver.find_element(By.XPATH, self.SCC.Board.ADD_LIST_SUBMIT_BUTTON).click()
-            assert driver.find_element(By.XPATH, self.SCC.Board.LIST_TITLE).text == "new_list"
             log.info(f"the name of the new list is: {driver.find_element(By.XPATH, self.SCC.Board.LIST_TITLE).text}")
+            assert driver.find_element(By.XPATH, self.SCC.Board.LIST_TITLE).text == "new_list"
+
 
         except NoSuchElementException:
             WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.SCC.Board.ADD_ANOTHER_LIST_BUTTON))).click()
