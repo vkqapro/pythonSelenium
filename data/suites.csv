@@ -1,3 +1,4 @@
 "DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","18570","Board Creation","tests.regression_ui","Wed Dec 04 03:02:34 UTC 2024","passed","Wed Dec 04 03:02:53 UTC 2024","TestUIRegression","test_ui_regression","",""
-"","13465","Login Functionality","tests.regression_ui","Wed Dec 04 03:02:20 UTC 2024","passed","Wed Dec 04 03:02:34 UTC 2024","TestUIRegression","test_ui_regression","",""
+"","8519","Login Functionality","tests.regression_ui","Thu Dec 05 21:54:43 UTC 2024","passed","Thu Dec 05 21:54:52 UTC 2024","TestUIRegression","test_ui_regression","",""
+"","24814","List Creation","tests.regression_ui","Thu Dec 05 21:55:16 UTC 2024","passed","Thu Dec 05 21:55:41 UTC 2024","TestUIRegression","test_ui_regression","",""
+"","23574","Board Creation","tests.regression_ui","Thu Dec 05 21:54:52 UTC 2024","passed","Thu Dec 05 21:55:16 UTC 2024","TestUIRegression","test_ui_regression","",""
