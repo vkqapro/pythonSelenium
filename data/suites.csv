@@ -1,4 +1,5 @@
 "DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","8519","Login Functionality","tests.regression_ui","Thu Dec 05 21:54:43 UTC 2024","passed","Thu Dec 05 21:54:52 UTC 2024","TestUIRegression","test_ui_regression","",""
-"","24814","List Creation","tests.regression_ui","Thu Dec 05 21:55:16 UTC 2024","passed","Thu Dec 05 21:55:41 UTC 2024","TestUIRegression","test_ui_regression","",""
-"","23574","Board Creation","tests.regression_ui","Thu Dec 05 21:54:52 UTC 2024","passed","Thu Dec 05 21:55:16 UTC 2024","TestUIRegression","test_ui_regression","",""
+"","11306","Login Functionality","tests.regression_ui","Fri Dec 06 02:23:22 UTC 2024","passed","Fri Dec 06 02:23:34 UTC 2024","TestUIRegression","test_ui_regression","",""
+"","19798","Card Creation","tests.regression_ui","Fri Dec 06 02:24:29 UTC 2024","passed","Fri Dec 06 02:24:49 UTC 2024","TestUIRegression","test_ui_regression","",""
+"","27858","List Creation","tests.regression_ui","Fri Dec 06 02:24:01 UTC 2024","passed","Fri Dec 06 02:24:29 UTC 2024","TestUIRegression","test_ui_regression","",""
+"","26871","Board Creation","tests.regression_ui","Fri Dec 06 02:23:34 UTC 2024","passed","Fri Dec 06 02:24:01 UTC 2024","TestUIRegression","test_ui_regression","",""
