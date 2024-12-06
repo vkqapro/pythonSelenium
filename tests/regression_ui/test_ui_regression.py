@@ -163,7 +163,6 @@ class TestUIRegression(BaseTest):
         with allure.step('TVeifying that the card is moved to another list'):
             new_card_location = driver.find_element(By.XPATH, self.SCC.List.CARD_LOCATION_ON_ANOTHER_LIST)
             log.info(new_card_location.text)
-            log.info(new_card_location.text)
             assert new_card_location.text == 'new_card'
 
 
