@@ -124,7 +124,7 @@ class TestUIRegression(BaseTest):
     @allure.title('Card Creation')
     def test_card_creation(self, driver):
         time.sleep(5)
-        with allure.step('Log in to Trello account'):
+        with allure.step('Log in to Trello account.'):
 
             self.test_login(driver)
         with allure.step('Open a board with an existing list and create a new card'):
@@ -136,7 +136,6 @@ class TestUIRegression(BaseTest):
                 time.sleep(1)
                 driver.find_element(By.XPATH, self.SCC.List.CARD_NAME_FIELD).send_keys('new_card')
                 driver.find_element(By.XPATH, self.SCC.List.ADD_CARD_SUBMIT_BUTTOMN).click()
-
             except Exception as e:
                 log.info("An error occurred: ", str(e))
         with allure.step('Verify that the card is created'):
