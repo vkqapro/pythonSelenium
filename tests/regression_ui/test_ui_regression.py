@@ -7,6 +7,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.common.action_chains import ActionChains
 import logging as log
 import time
 import pyotp
@@ -141,7 +142,28 @@ class TestUIRegression(BaseTest):
         with allure.step('Verify that the card is created'):
             assert WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH, self.SCC.List.NEW_CARD_TITLE))).is_displayed()
             log.info(f"The name of the new card is: {driver.find_element(By.XPATH, self.SCC.List.NEW_CARD_TITLE).text}")
-            # assert driver.find_element(By.XPATH, self.SCC.List.NEW_CARD_TITLE).text == "new_card"
+
+    @pytest.mark.TC000
+    @pytest.mark.TC005
+    @allure.title('Drag and drop card from one list to another')
+    def test_drag_n_drop_card(self, driver):
+        time.sleep(7)
+        with allure.step('Log in to Trello account'):
+            self.test_login(driver)
+        with allure.step('Drag and drop card from one list to another list'):
+            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.SCC.Board.BOARD_TITLE))).click()
+            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.SCC.Board.ADD_ANOTHER_LIST_BUTTON))).click()
+            driver.find_element(By.XPATH, self.SCC.Board.ENTER_LIST_NAME_FIELD).send_keys('new_list_2')
+            driver.find_element(By.XPATH, self.SCC.Board.ADD_LIST_SUBMIT_BUTTON).click()
+            time.sleep(3)
+            source_element = driver.find_element(By.XPATH, self.SCC.List.NEW_CARD_TITLE)
+            target_element = driver.find_element(By.XPATH, self.SCC.List.DROP_LOCATION_LIST)
+            action = ActionChains(driver)
+            action.drag_and_drop(source_element, target_element).perform()
+        with allure.step('TVeifying that the card is moved to another list'):
+            new_card_location = driver.find_element(By.XPATH, self.SCC.List.CARD_LOCATION_ON_ANOTHER_LIST)
+            log.info(new_card_location.text)
+            assert new_card_location.text == 'new_card'
 
 
 

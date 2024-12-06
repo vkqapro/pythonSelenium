@@ -34,3 +34,5 @@ class SccLocators(object):
         CARD_NAME_FIELD = "//*[@placeholder='Enter a title or paste a link']"
         ADD_CARD_SUBMIT_BUTTOMN = "//button[contains(text(), 'Add card')]"
         NEW_CARD_TITLE = "//*[contains(text(), 'new_card')]"
+        DROP_LOCATION_LIST = "//ol/li[2][@data-testid='list-wrapper']"
+        CARD_LOCATION_ON_ANOTHER_LIST = "//div/ol/li[2]/div/ol/li[1]"
