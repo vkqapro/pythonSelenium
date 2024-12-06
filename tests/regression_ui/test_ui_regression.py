@@ -111,7 +111,6 @@ class TestUIRegression(BaseTest):
             log.info(f"the name of the new list is: {driver.find_element(By.XPATH, self.SCC.Board.LIST_TITLE).text}")
             assert driver.find_element(By.XPATH, self.SCC.Board.LIST_TITLE).text == "new_list"
 
-
         except NoSuchElementException:
             WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.SCC.Board.ADD_ANOTHER_LIST_BUTTON))).click()
             driver.find_element(By.XPATH, self.SCC.Board.ENTER_LIST_NAME_FIELD).click()
@@ -120,6 +119,35 @@ class TestUIRegression(BaseTest):
             assert driver.find_element(By.XPATH, self.SCC.Board.LIST_TITLE).text == "new_list"
             log.info(f"the name of the new list is: {driver.find_element(By.XPATH, self.SCC.Board.LIST_TITLE).text}")
         time.sleep(4)
+    @pytest.mark.TC000
+    @pytest.mark.TC004
+    @allure.title('Card Creation')
+    def test_card_creation(self, driver):
+        time.sleep(5)
+        with allure.step('Log in to Trello account'):
+
+            self.test_login(driver)
+        with allure.step('Open a board with an existing list and create a new card'):
+            try:
+                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.SCC.Board.BOARD_TITLE))).click()
+                WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH, self.SCC.Board.LIST_TITLE)))
+                driver.find_element(By.XPATH, self.SCC.List.ADD_A_CARD_BUTTON).click()
+                driver.find_element(By.XPATH, self.SCC.List.CARD_NAME_FIELD).click()
+                time.sleep(1)
+                driver.find_element(By.XPATH, self.SCC.List.CARD_NAME_FIELD).send_keys('new_card')
+                driver.find_element(By.XPATH, self.SCC.List.ADD_CARD_SUBMIT_BUTTOMN).click()
+
+            except Exception as e:
+                log.info("An error occurred: ", str(e))
+        with allure.step('Verify that the card is created'):
+            assert WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH, self.SCC.List.NEW_CARD_TITLE))).is_displayed()
+            log.info(f"The name of the new card is: {driver.find_element(By.XPATH, self.SCC.List.NEW_CARD_TITLE).text}")
+            # assert driver.find_element(By.XPATH, self.SCC.List.NEW_CARD_TITLE).text == "new_card"
+
+
+
+
+
 
 
 

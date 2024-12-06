@@ -28,3 +28,9 @@ class SccLocators(object):
         ADD_LIST_SUBMIT_BUTTON = "//*[@data-testid='list-composer-add-list-button']"
         LIST_TITLE = "//*[contains(text(), 'new_list')][1]"
         ADD_ANOTHER_LIST_BUTTON = "//*[contains(text(), 'Add another list')][1]"
+
+    class List:
+        ADD_A_CARD_BUTTON = "//button[contains(text(), 'Add a card')]"
+        CARD_NAME_FIELD = "//*[@placeholder='Enter a title or paste a link']"
+        ADD_CARD_SUBMIT_BUTTOMN = "//button[contains(text(), 'Add card')]"
+        NEW_CARD_TITLE = "//*[contains(text(), 'new_card')]"
