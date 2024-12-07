@@ -28,8 +28,8 @@ class TestUIRegression(BaseTest):
         options = Options()
         options.add_argument("--headless")
         options.add_argument("--start-maximized")
-        options.add_argument("--no-sandbox")
-        options.add_argument("--disable-gpu")
+        # options.add_argument("--no-sandbox")
+        # options.add_argument("--disable-gpu")
         driver = webdriver.Chrome(options=options)
         yield driver
         driver.quit()
@@ -66,13 +66,13 @@ class TestUIRegression(BaseTest):
                 ))
                 el_six_otp_code.click()
                 el_six_otp_code.send_keys(self.otp_auth())
-                # time.sleep(10)
-                # WebDriverWait(driver, 30).until(EC.url_matches(self.SCC.HOME_URL))
-                # log.info(f"The user's home url is: {driver.current_url}")
-                # assert driver.current_url == self.SCC.HOME_URL
-
+                time.sleep(10)
+                WebDriverWait(driver, 10).until(EC.url_matches(self.SCC.HOME_URL))
+                log.info(f"The user's home url is: {driver.current_url}")
+                assert driver.current_url == self.SCC.HOME_URL
             except Exception as e:
                 log.info("An error occurred: ", str(e))
+
 
     @pytest.mark.TC000
     @pytest.mark.TC002
@@ -83,9 +83,9 @@ class TestUIRegression(BaseTest):
             self.test_login(driver)
             time.sleep(2)
         with allure.step('Create a new board'):
-            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.SCC.HomePage.CREATE_BUTTON))).click()
-            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.SCC.HomePage.CREATE_BOARD_BUTTON))).click()
-            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.SCC.HomePage.BLUE_BKG_BUTTON))).click()
+            WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.HomePage.CREATE_BUTTON))).click()
+            WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.HomePage.CREATE_BOARD_BUTTON))).click()
+            WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.HomePage.BLUE_BKG_BUTTON))).click()
             el_new_board_name = driver.find_element(By.XPATH, self.SCC.HomePage.NEW_BOARD_NAME_FIELD)
             el_new_board_name.click()
             el_new_board_name.send_keys('new_board')
@@ -94,6 +94,7 @@ class TestUIRegression(BaseTest):
             el_new_board = WebDriverWait(driver, 60).until(EC.visibility_of_element_located((By.XPATH, "//h1[contains(text(),'new_board')]"))).text
             assert el_new_board == 'new_board'
             log.info(f"New board's name is: {el_new_board}")
+
 
     @pytest.mark.TC000
     @pytest.mark.TC003
@@ -119,18 +120,20 @@ class TestUIRegression(BaseTest):
             assert driver.find_element(By.XPATH, self.SCC.Board.LIST_TITLE).text == "new_list"
             log.info(f"the name of the new list is: {driver.find_element(By.XPATH, self.SCC.Board.LIST_TITLE).text}")
         time.sleep(4)
+
+
     @pytest.mark.TC000
     @pytest.mark.TC004
     @allure.title('Card Creation')
     def test_card_creation(self, driver):
-        time.sleep(5)
+        time.sleep(10)
         with allure.step('Log in to Trello account.'):
 
             self.test_login(driver)
         with allure.step('Open a board with an existing list and create a new card'):
             try:
-                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.SCC.Board.BOARD_TITLE))).click()
-                WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH, self.SCC.Board.LIST_TITLE)))
+                WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.Board.BOARD_TITLE))).click()
+                WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, self.SCC.Board.LIST_TITLE)))
                 driver.find_element(By.XPATH, self.SCC.List.ADD_A_CARD_BUTTON).click()
                 driver.find_element(By.XPATH, self.SCC.List.CARD_NAME_FIELD).click()
                 time.sleep(1)
@@ -142,6 +145,8 @@ class TestUIRegression(BaseTest):
             assert WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH, self.SCC.List.NEW_CARD_TITLE))).is_displayed()
             log.info(f"The name of the new card is: {driver.find_element(By.XPATH, self.SCC.List.NEW_CARD_TITLE).text}")
 
+
+
     @pytest.mark.TC000
     @pytest.mark.TC005
     @allure.title('Drag and drop card from one list to another')
@@ -150,8 +155,8 @@ class TestUIRegression(BaseTest):
         with allure.step('Log in to Trello account'):
             self.test_login(driver)
         with allure.step('Drag and drop card from one list to another list'):
-            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.SCC.Board.BOARD_TITLE))).click()
-            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.SCC.Board.ADD_ANOTHER_LIST_BUTTON))).click()
+            WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.Board.BOARD_TITLE))).click()
+            WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.Board.ADD_ANOTHER_LIST_BUTTON))).click()
             driver.find_element(By.XPATH, self.SCC.Board.ENTER_LIST_NAME_FIELD).send_keys('new_list_2')
             driver.find_element(By.XPATH, self.SCC.Board.ADD_LIST_SUBMIT_BUTTON).click()
             time.sleep(3)
