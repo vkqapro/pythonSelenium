@@ -44,6 +44,7 @@ class TestUIRegression(BaseTest):
     def test_login(self, driver):
         with allure.step('Navigate to the Trello login page'):
             driver.get(self.SCC.URL_LOGIN)
+            time.sleep(3)
         with allure.step('Enter valid credentials (email, password, and 6-digits verification code)'):
             try:
                 el_user_name = WebDriverWait(driver, 60).until(EC.element_to_be_clickable(
