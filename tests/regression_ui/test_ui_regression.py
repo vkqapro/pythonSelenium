@@ -91,9 +91,8 @@ class TestUIRegression(BaseTest):
             driver.find_element(By.XPATH, self.SCC.HomePage.CREATE_SUBMIT_BUTTON).click()
         with allure.step("Validating that the new board is created and available in the user's dashboard"):
             el_new_board = WebDriverWait(driver, 60).until(EC.visibility_of_element_located((By.XPATH, "//h1[contains(text(),'new_board')]"))).text
-            assert el_new_board == 'new_board2'
+            assert el_new_board == 'new_board'
             log.info(f"New board's name is: {el_new_board}")
-
 
     @pytest.mark.TC000
     @pytest.mark.TC003
@@ -119,7 +118,6 @@ class TestUIRegression(BaseTest):
             assert driver.find_element(By.XPATH, self.SCC.Board.LIST_TITLE).text == "To Do"
             log.info(f"the name of the new list is: {driver.find_element(By.XPATH, self.SCC.Board.LIST_TITLE).text}")
         time.sleep(4)
-
 
     @pytest.mark.TC000
     @pytest.mark.TC004
