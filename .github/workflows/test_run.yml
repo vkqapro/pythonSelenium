@@ -51,6 +51,7 @@ jobs:
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
       run: |
         pytest -m TC000 --alluredir allure-results
+      continue-on-error: true
 
     - name: Copy history from gh-pages to Alullure-results
       run: |

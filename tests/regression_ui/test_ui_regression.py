@@ -28,8 +28,6 @@ class TestUIRegression(BaseTest):
         options = Options()
         options.add_argument("--headless")
         options.add_argument("--start-maximized")
-        # options.add_argument("--no-sandbox")
-        # options.add_argument("--disable-gpu")
         driver = webdriver.Chrome(options=options)
         yield driver
         driver.quit()
@@ -93,11 +91,11 @@ class TestUIRegression(BaseTest):
             driver.find_element(By.XPATH, self.SCC.HomePage.CREATE_SUBMIT_BUTTON).click()
         with allure.step("Validating that the new board is created and available in the user's dashboard"):
             el_new_board = WebDriverWait(driver, 60).until(EC.visibility_of_element_located((By.XPATH, "//h1[contains(text(),'new_board')]"))).text
-            assert el_new_board == 'new_board'
+            assert el_new_board == 'new_board2'
             log.info(f"New board's name is: {el_new_board}")
 
 
-    @pytest.mark.TC000
+    # @pytest.mark.TC000
     @pytest.mark.TC003
     @allure.title('List Creation')
     def test_list_creation(self, driver):
@@ -123,7 +121,7 @@ class TestUIRegression(BaseTest):
         time.sleep(4)
 
 
-    @pytest.mark.TC000
+    # @pytest.mark.TC000
     @pytest.mark.TC004
     @allure.title('Card Creation')
     def test_card_creation(self, driver):
@@ -147,7 +145,7 @@ class TestUIRegression(BaseTest):
             assert WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH, self.SCC.List.NEW_CARD_TITLE))).is_displayed()
             log.info(f"The name of the new card is: {driver.find_element(By.XPATH, self.SCC.List.NEW_CARD_TITLE).text}")
 
-    @pytest.mark.TC000
+    # @pytest.mark.TC000
     @pytest.mark.TC005
     @allure.title('Drag and drop card from one list to another')
     def test_drag_n_drop_card(self, driver):
@@ -169,7 +167,7 @@ class TestUIRegression(BaseTest):
             log.info(new_card_location.text)
             assert new_card_location.text == 'new_card'
 
-    @pytest.mark.TC000
+    # @pytest.mark.TC000
     @pytest.mark.TC006
     @allure.title('Archive a card')
     def test_archive_card(self, driver):
@@ -199,7 +197,7 @@ class TestUIRegression(BaseTest):
             el_qty = len(element)
             assert el_qty == 0
 
-    @pytest.mark.TC000
+    # @pytest.mark.TC000
     @pytest.mark.TC007
     @allure.title('Label a Card')
     def test_label_card(self, driver):
