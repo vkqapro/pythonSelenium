@@ -37,3 +37,9 @@ class SccLocators(object):
         NEW_CARD_TITLE = "//*[contains(text(), 'new_card')]"
         DROP_LOCATION_LIST = "//ol/li[2][@data-testid='list-wrapper']"
         CARD_LOCATION_ON_ANOTHER_LIST = "//div/ol/li[2]/div/ol/li[1]"
+        CARD_TO_ARCHIVE = "//*[contains(text(), 'new_card')]"
+        ARCHIVE_BUTTON = "//button[contains(text(), 'Archive')]"
+        DELETE_BUTTON = "//button[contains(text(), 'Delete')]"
+        DELETE_CONFIRM_BUTTON = "//button[@data-testid='popover-confirm-button' and contains(text(), 'Delete')]"
+        ALL_CARDS_ON_FIRST_LIST = "//div[@class='board-canvas']/ol/li[1]/div/ol/li[@data-testid='list-card']"
+

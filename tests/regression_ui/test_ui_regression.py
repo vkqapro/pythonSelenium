@@ -169,10 +169,34 @@ class TestUIRegression(BaseTest):
             log.info(new_card_location.text)
             assert new_card_location.text == 'new_card'
 
+    @pytest.mark.TC000
+    @pytest.mark.TC006
+    @allure.title('Archive a card')
+    def test_archive_card(self, driver):
+        time.sleep(5)
+        with allure.step('Log in to Trello account'):
+            self.test_login(driver)
 
+        with allure.step('Open a board and select a card'):
+            WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.Board.BOARD_TITLE))).click()
+            WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, self.SCC.Board.LIST_TITLE))).click()
+            driver.find_element(By.XPATH, self.SCC.List.ADD_A_CARD_BUTTON).click()
+            driver.find_element(By.XPATH, self.SCC.List.CARD_NAME_FIELD).click()
+            time.sleep(1)
+            driver.find_element(By.XPATH, self.SCC.List.CARD_NAME_FIELD).send_keys('new_card')
+            driver.find_element(By.XPATH, self.SCC.List.ADD_CARD_SUBMIT_BUTTOMN).click()
+            time.sleep(2)
 
+        with allure.step('Click the card to open and archive it'):
+            driver.find_element(By.XPATH, self.SCC.List.CARD_TO_ARCHIVE).click()
+            WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.List.ARCHIVE_BUTTON))).click()
+            WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.List.DELETE_BUTTON))).click()
+            WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.List.DELETE_CONFIRM_BUTTON))).click()
 
-
-
+        with allure.step('Verify that the card is acrhived and the list is empty'):
+            time.sleep(3)
+            element = driver.find_elements(By.XPATH, self.SCC.List.ALL_CARDS_ON_FIRST_LIST)
+            el_qty = len(element)
+            assert el_qty == 0
 
 
