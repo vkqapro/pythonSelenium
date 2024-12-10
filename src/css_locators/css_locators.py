@@ -27,7 +27,7 @@ class SccLocators(object):
         ADD_A_LIST_BUTTON = "//*[contains(text(), 'Add a list')]"
         ENTER_LIST_NAME_FIELD = "//*[@name='Enter list name…']"
         ADD_LIST_SUBMIT_BUTTON = "//*[@data-testid='list-composer-add-list-button']"
-        LIST_TITLE = "//*[contains(text(), 'new_list')][1]"
+        LIST_TITLE = "//*[contains(text(), 'To Do')][1]"
         ADD_ANOTHER_LIST_BUTTON = "//*[contains(text(), 'Add another list')][1]"
 
     class List:
@@ -42,4 +42,8 @@ class SccLocators(object):
         DELETE_BUTTON = "//button[contains(text(), 'Delete')]"
         DELETE_CONFIRM_BUTTON = "//button[@data-testid='popover-confirm-button' and contains(text(), 'Delete')]"
         ALL_CARDS_ON_FIRST_LIST = "//div[@class='board-canvas']/ol/li[1]/div/ol/li[@data-testid='list-card']"
+        LABELS_BUTTON = "//*[contains(text(), 'Labels')]"
+        LABEL_GREEN = "//*[@data-color='green']"
+        X_BUTTON = "//button[@aria-label='Close popover']"
+        X_DIALOG_BUTTON = "//button[@aria-label='Close dialog']"
 

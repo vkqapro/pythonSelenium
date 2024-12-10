@@ -110,14 +110,14 @@ class TestUIRegression(BaseTest):
             driver.find_element(By.XPATH, self.SCC.Board.ENTER_LIST_NAME_FIELD).send_keys('new_list')
             driver.find_element(By.XPATH, self.SCC.Board.ADD_LIST_SUBMIT_BUTTON).click()
             log.info(f"the name of the new list is: {driver.find_element(By.XPATH, self.SCC.Board.LIST_TITLE).text}")
-            assert driver.find_element(By.XPATH, self.SCC.Board.LIST_TITLE).text == "new_list"
+            assert driver.find_element(By.XPATH, self.SCC.Board.LIST_TITLE).text == "To Do"
 
         except NoSuchElementException:
             WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.SCC.Board.ADD_ANOTHER_LIST_BUTTON))).click()
             driver.find_element(By.XPATH, self.SCC.Board.ENTER_LIST_NAME_FIELD).click()
             driver.find_element(By.XPATH, self.SCC.Board.ENTER_LIST_NAME_FIELD).send_keys('new_list')
             driver.find_element(By.XPATH, self.SCC.Board.ADD_LIST_SUBMIT_BUTTON).click()
-            assert driver.find_element(By.XPATH, self.SCC.Board.LIST_TITLE).text == "new_list"
+            assert driver.find_element(By.XPATH, self.SCC.Board.LIST_TITLE).text == "To Do"
             log.info(f"the name of the new list is: {driver.find_element(By.XPATH, self.SCC.Board.LIST_TITLE).text}")
         time.sleep(4)
 
@@ -142,10 +142,9 @@ class TestUIRegression(BaseTest):
             except Exception as e:
                 log.info("An error occurred: ", str(e))
         with allure.step('Verify that the card is created'):
+            time.sleep(2)
             assert WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH, self.SCC.List.NEW_CARD_TITLE))).is_displayed()
             log.info(f"The name of the new card is: {driver.find_element(By.XPATH, self.SCC.List.NEW_CARD_TITLE).text}")
-
-
 
     @pytest.mark.TC000
     @pytest.mark.TC005
@@ -164,7 +163,7 @@ class TestUIRegression(BaseTest):
             target_element = driver.find_element(By.XPATH, self.SCC.List.DROP_LOCATION_LIST)
             action = ActionChains(driver)
             action.drag_and_drop(source_element, target_element).perform()
-        with allure.step('TVeifying that the card is moved to another list'):
+        with allure.step('Verifying that the card is moved to another list'):
             new_card_location = driver.find_element(By.XPATH, self.SCC.List.CARD_LOCATION_ON_ANOTHER_LIST)
             log.info(new_card_location.text)
             assert new_card_location.text == 'new_card'
@@ -199,4 +198,32 @@ class TestUIRegression(BaseTest):
             el_qty = len(element)
             assert el_qty == 0
 
+    @pytest.mark.TC000
+    @pytest.mark.TC007
+    @allure.title('Label a Card')
+    def test_label_card(self, driver):
+        time.sleep(4)
+        with allure.step('Log in to Trello account'):
+            self.test_login(driver)
+
+        with allure.step('Open a board and select a card'):
+            WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.Board.BOARD_TITLE))).click()
+            WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, self.SCC.Board.LIST_TITLE))).click()
+            driver.find_element(By.XPATH, self.SCC.List.ADD_A_CARD_BUTTON).click()
+            driver.find_element(By.XPATH, self.SCC.List.CARD_NAME_FIELD).click()
+            time.sleep(1)
+            driver.find_element(By.XPATH, self.SCC.List.CARD_NAME_FIELD).send_keys('new_card')
+            driver.find_element(By.XPATH, self.SCC.List.ADD_CARD_SUBMIT_BUTTOMN).click()
+            time.sleep(3)
+
+        with allure.step('Click the card to open and archive it'):
+            driver.find_element(By.XPATH, self.SCC.List.CARD_TO_ARCHIVE).click()
+            WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.List.LABELS_BUTTON))).click()
+            time.sleep(2)
+            WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.List.LABEL_GREEN))).click()
+            WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.List.X_BUTTON))).click()
+            WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.List.X_DIALOG_BUTTON))).click()
+            time.sleep(3)
+            green_label = driver.find_element(By.XPATH, self.SCC.List.LABEL_GREEN).is_displayed()
+            assert driver.find_element(By.XPATH, self.SCC.List.LABEL_GREEN).is_displayed()
 
