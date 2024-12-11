@@ -108,14 +108,14 @@ class TestUIRegression(BaseTest):
             driver.find_element(By.XPATH, self.SCC.Board.ENTER_LIST_NAME_FIELD).send_keys('new_list')
             driver.find_element(By.XPATH, self.SCC.Board.ADD_LIST_SUBMIT_BUTTON).click()
             log.info(f"the name of the new list is: {driver.find_element(By.XPATH, self.SCC.Board.LIST_TITLE).text}")
-            assert driver.find_element(By.XPATH, self.SCC.Board.LIST_TITLE).text == "To Do"
+            assert driver.find_element(By.XPATH, self.SCC.Board.LIST_TITLE).text == "new_list"
 
         except NoSuchElementException:
             WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.SCC.Board.ADD_ANOTHER_LIST_BUTTON))).click()
             driver.find_element(By.XPATH, self.SCC.Board.ENTER_LIST_NAME_FIELD).click()
             driver.find_element(By.XPATH, self.SCC.Board.ENTER_LIST_NAME_FIELD).send_keys('new_list')
             driver.find_element(By.XPATH, self.SCC.Board.ADD_LIST_SUBMIT_BUTTON).click()
-            assert driver.find_element(By.XPATH, self.SCC.Board.LIST_TITLE).text == "To Do"
+            assert driver.find_element(By.XPATH, self.SCC.Board.LIST_TITLE).text == "new_list"
             log.info(f"the name of the new list is: {driver.find_element(By.XPATH, self.SCC.Board.LIST_TITLE).text}")
         time.sleep(4)
 
@@ -189,7 +189,7 @@ class TestUIRegression(BaseTest):
             WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.List.DELETE_BUTTON))).click()
             WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.List.DELETE_CONFIRM_BUTTON))).click()
 
-        with allure.step('Verify that the card is acrhived and the list is empty'):
+        with allure.step('Verify that the card is archived and the list is empty'):
             time.sleep(3)
             element = driver.find_elements(By.XPATH, self.SCC.List.ALL_CARDS_ON_FIRST_LIST)
             el_qty = len(element)
