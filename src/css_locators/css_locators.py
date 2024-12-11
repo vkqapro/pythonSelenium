@@ -30,7 +30,7 @@ class SccLocators(object):
         ADD_A_LIST_BUTTON = "//*[contains(text(), 'Add a list')]"
         ENTER_LIST_NAME_FIELD = "//*[@name='Enter list name…']"
         ADD_LIST_SUBMIT_BUTTON = "//*[@data-testid='list-composer-add-list-button']"
-        LIST_TITLE = "//*[contains(text(), 'To Do')][1]"
+        LIST_TITLE = "//*[contains(text(), 'new_list')][1]"
         ADD_ANOTHER_LIST_BUTTON = "//*[contains(text(), 'Add another list')][1]"
 
     class List:
