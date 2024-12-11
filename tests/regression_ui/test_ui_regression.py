@@ -224,3 +224,37 @@ class TestUIRegression(BaseTest):
             green_label = driver.find_element(By.XPATH, self.SCC.List.LABEL_GREEN).is_displayed()
             assert driver.find_element(By.XPATH, self.SCC.List.LABEL_GREEN).is_displayed()
 
+    # @pytest.mark.TC000
+    @pytest.mark.TC008
+    @allure.title('Board Deletion')
+    def test_board_deletion(self, driver):
+        time.sleep(2)
+        with allure.step('Log in to Trello account'):
+            self.test_login(driver)
+
+        with allure.step('Open board'):
+            WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.Board.BOARD_TITLE))).click()
+
+        with allure.step('Click "More" and select "Close Board, then delete the board permanently"'):
+            WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.List.SHOW_MENU))).click()
+            WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.List.IN_MENU_CLOSE_BOARD))).click()
+            WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.List.IN_MENU_PROVE_CLOSE_BOARD))).click()
+            WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.List.IN_MENU_PERMANENT_DELETE))).click()
+            WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.List.IN_MENU_CONFIRM_PERMANENT_DELETE))).click()
+
+        with allure.step("Verify board's deletion"):
+            time.sleep(4)
+            driver.find_element(By.XPATH, self.SCC.HomePage.BOARDS_BUTTON).click()
+            time.sleep(3)
+            active_boards = driver.find_elements(By.XPATH, self.SCC.HomePage.CHECK_ACTIVE_BOARDS)
+            active_boards_count = len(active_boards)
+            log.info('====' * 50)
+            log.info(active_boards_count - 2)
+            assert active_boards_count - 2 == 0
+
+
+
+
+
+
+

@@ -20,6 +20,9 @@ class SccLocators(object):
         BLUE_BKG_BUTTON = "//li[@class='weB1QxFqJjPDxm'][1]"
         NEW_BOARD_NAME_FIELD = "//input[@data-testid='create-board-title-input']"
         CREATE_SUBMIT_BUTTON = "//*[@data-testid='create-board-submit-button']"
+        CHECK_ACTIVE_BOARDS = "//div[3]/div/ul[@class='boards-page-board-section-list']/li"
+        YOUR_BOARDS_TILE = "//h3[contains(text(), 'Your boards')]"
+        BOARDS_BUTTON = "//nav/div[3]/div/ul/li/ul/li[1]"
 
     class Board:
         # BOARD_TITLE = "//div[1][@class='boards-page-board-section mod-no-sidebar']/div[2]/ul/li[1]/a/div"
@@ -46,4 +49,10 @@ class SccLocators(object):
         LABEL_GREEN = "//*[@data-color='green']"
         X_BUTTON = "//button[@aria-label='Close popover']"
         X_DIALOG_BUTTON = "//button[@aria-label='Close dialog']"
+        SHOW_MENU = "//button[@aria-label='Show menu']"
+        IN_MENU_CLOSE_BOARD = "//*[contains(text(), 'Close board')]"
+        IN_MENU_PROVE_CLOSE_BOARD = "//button[@data-testid='popover-close-board-confirm']"
+        IN_MENU_PERMANENT_DELETE = "//button[@data-testid='close-board-delete-board-button']"
+        IN_MENU_CONFIRM_PERMANENT_DELETE ="//button[@data-testid='close-board-delete-board-confirm-button']"
+
 
