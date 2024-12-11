@@ -224,7 +224,7 @@ class TestUIRegression(BaseTest):
             green_label = driver.find_element(By.XPATH, self.SCC.List.LABEL_GREEN).is_displayed()
             assert driver.find_element(By.XPATH, self.SCC.List.LABEL_GREEN).is_displayed()
 
-    @pytest.mark.TC000
+    # @pytest.mark.TC000
     @pytest.mark.TC008
     @allure.title('Board Deletion')
     def test_board_deletion(self, driver):
