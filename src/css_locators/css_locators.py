@@ -1,5 +1,24 @@
 
 class SccLocators(object):
+    """
+
+    Class representing locators for the Trello web application.
+
+    Attributes:
+        URL_LOGIN (str): The URL for the Trello login page.
+        HOME_URL (str): The URL for the Trello home page.
+        HREF (str): XPath locator for the "boards" href element.
+
+    Classes:
+        - LoginPage: Locators for the Trello login page elements.
+        - HomePage: Locators for elements on the Trello home page.
+        - Board: Locators for elements on a Trello board page.
+        - List: Locators for elements on a Trello list within a board.
+        - Search: Locators for elements related to search functionality.
+        - Account: Locators for account-related elements.
+
+    This class organizes the locators used within the Trello web application for easy management and access during test automation.
+    """
     URL_LOGIN = 'https://id.atlassian.com/login?application=trello&continue=https%3A%2F%2Ftrello.com%2Fauth%2Fatlassian%2Fcallback%3Fdisplay%3DeyJ2ZXJpZmljYXRpb25TdHJhdGVneSI6InNvZnQifQ%253D%253D&display=eyJ2ZXJpZmljYXRpb25TdHJhdGVneSI6InNvZnQifQ%3D%3D'
     HOME_URL = 'https://trello.com/u/vkqapro/boards'
     HREF = "//*[@href='/u/vkqapro/boards']"

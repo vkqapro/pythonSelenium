@@ -15,12 +15,29 @@ from dotenv import load_dotenv
 import os
 import allure
 
+
 load_dotenv()
 SECRET_KEY = os.getenv('SECRET_KEY')
 USER_EMAIL = os.getenv('USER_EMAIL')
 USER_PASSWORD = os.getenv('USER_PASSWORD')
 
 class TestUIRegression(BaseTest):
+    """
+    Class TestUIRegression that inherits from BaseTest.
+
+    The class contains methods for UI regression testing of a web application.
+    The methods include:
+    - driver: a fixture to set up the WebDriver with Chrome options in headless mode.
+    - otp_auth: generates a one-time password using a secret key.
+    - test_login: tests the login functionality by entering valid credentials and verification code.
+    - test_board_creation: tests the creation of a new board after logging in.
+    - test_list_creation: tests the creation of a new list within a board.
+    - test_card_creation: tests the creation of a new card in a list.
+    - test_drag_n_drop_card: tests dragging and dropping a card from one list to another.
+    - test_archive_card: tests archiving a card after logging in and selecting a card on a board.
+
+    Each test method is annotated with pytest markers and allure titles for test case identification and reporting purposes.
+    """
     @pytest.fixture(scope='function', autouse=True)
     def driver(self, request):
         options = Options()
@@ -123,7 +140,6 @@ class TestUIRegression(BaseTest):
     def test_card_creation(self, driver):
         time.sleep(10)
         with allure.step('Log in to Trello account.'):
-
             self.test_login(driver)
         with allure.step('Open a board with an existing list and create a new card'):
             try:
@@ -226,7 +242,7 @@ class TestUIRegression(BaseTest):
     @pytest.mark.TC008
     @allure.title('Search functionality')
     def test_search_board(self, driver):
-        time.sleep(2)
+        time.sleep(5)
         with allure.step('Log in to Trello account'):
             self.test_login(driver)
             # time.sleep(2)
@@ -242,7 +258,7 @@ class TestUIRegression(BaseTest):
     @pytest.mark.TC009
     @allure.title('Board Deletion')
     def test_board_deletion(self, driver):
-        time.sleep(2)
+        time.sleep(5)
         with allure.step('Log in to Trello account'):
             self.test_login(driver)
 
@@ -270,7 +286,7 @@ class TestUIRegression(BaseTest):
     @pytest.mark.TC010
     @allure.title('Log out from Trello account')
     def test_log_out(self, driver):
-        time.sleep(3)
+        time.sleep(5)
         with allure.step('Log in to Trello account'):
             self.test_login(driver)
 
