@@ -61,5 +61,10 @@ class SccLocators(object):
         ADVANCE_SEARCH_FIELD = "//div/input[@data-testid='advanced-search-input']"
         BOARD_FOUND_IN_SEARCH = "//a/span/span[2]/span/span/span/div/span[contains(text(), 'new_board')]"
 
+    class Account:
+        ACCOUNT_MENU = "//div/button[@aria-label='Open member menu']"
+        LOG_OU_BUTTON = "//span[contains(text(), 'Log out')]"
+        URL_HOME = 'https://trello.com/home'
+
 
 

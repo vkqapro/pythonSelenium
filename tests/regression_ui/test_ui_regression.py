@@ -20,8 +20,6 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 USER_EMAIL = os.getenv('USER_EMAIL')
 USER_PASSWORD = os.getenv('USER_PASSWORD')
 
-
-
 class TestUIRegression(BaseTest):
     @pytest.fixture(scope='function', autouse=True)
     def driver(self, request):
@@ -267,6 +265,24 @@ class TestUIRegression(BaseTest):
             log.info('====' * 50)
             log.info(active_boards_count - 2)
             assert active_boards_count - 2 == 0
+
+    @pytest.mark.TC000
+    @pytest.mark.TC010
+    @allure.title('Log out from Trello account')
+    def test_log_out(self, driver):
+        time.sleep(3)
+        with allure.step('Log in to Trello account'):
+            self.test_login(driver)
+
+        with allure.step('Log out from Trello account'):
+            WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.Account.ACCOUNT_MENU))).click()
+            WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.Account.LOG_OU_BUTTON))).click()
+            time.sleep(2)
+            WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.Account.LOG_OU_BUTTON))).click()
+        with allure.step('Verify that the user is logged out and located at Trello.com/home page'):
+            assert WebDriverWait(driver, 15).until(EC.url_to_be('https://trello.com/home'))
+
+
 
 
 
