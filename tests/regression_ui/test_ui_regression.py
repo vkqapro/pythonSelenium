@@ -226,6 +226,22 @@ class TestUIRegression(BaseTest):
 
     @pytest.mark.TC000
     @pytest.mark.TC008
+    @allure.title('Search functionality')
+    def test_search_board(self, driver):
+        time.sleep(2)
+        with allure.step('Log in to Trello account'):
+            self.test_login(driver)
+            # time.sleep(2)
+        with allure.step('Search the board'):
+            WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, self.SCC.Search.SEARCH_FIELD))).click()
+            # driver.find_element(By.XPATH, self.SCC.Search.SEARCH_FIELD).click()
+            WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.Search.ADVANCE_SEARCH_BUTTON))).click()
+            WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.Search.ADVANCE_SEARCH_FIELD))).send_keys('new_board')
+            el_serched_board = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, self.SCC.Search.BOARD_FOUND_IN_SEARCH))).is_displayed()
+            assert el_serched_board == True
+
+    @pytest.mark.TC000
+    @pytest.mark.TC009
     @allure.title('Board Deletion')
     def test_board_deletion(self, driver):
         time.sleep(2)

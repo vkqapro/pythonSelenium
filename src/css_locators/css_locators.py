@@ -55,4 +55,11 @@ class SccLocators(object):
         IN_MENU_PERMANENT_DELETE = "//button[@data-testid='close-board-delete-board-button']"
         IN_MENU_CONFIRM_PERMANENT_DELETE ="//button[@data-testid='close-board-delete-board-confirm-button']"
 
+    class Search:
+        SEARCH_FIELD = "//nav/div[2]/div[1]"
+        ADVANCE_SEARCH_BUTTON = "//*[contains(text(), 'Advanced search')]"
+        ADVANCE_SEARCH_FIELD = "//div/input[@data-testid='advanced-search-input']"
+        BOARD_FOUND_IN_SEARCH = "//a/span/span[2]/span/span/span/div/span[contains(text(), 'new_board')]"
+
+
 
