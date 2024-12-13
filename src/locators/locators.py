@@ -1,5 +1,5 @@
 
-class SccLocators(object):
+class Locators(object):
     """
 
     Class representing locators for the Trello web application.

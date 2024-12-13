@@ -1,4 +1,4 @@
-from src.css_locators.css_locators import SccLocators
+from src.locators.locators import Locators
 
 import pytest
 class BaseTest:
@@ -13,7 +13,7 @@ class BaseTest:
         setup(self, request) - Fixture to set up SccLocators instance for each test.
 
     """
-    SCC: SccLocators
+    SCC: Locators
     @pytest.fixture(autouse=True)
     def setup(self, request):
-        request.cls.SCC = SccLocators()
+        request.cls.SCC = Locators()
