@@ -1,12 +1,8 @@
 name: Python+Selenium with Pytest and Allure reports
 
 on:
-  workflow_dispatch:
-
-#  schedule:
-#    - cron: "0 */18 * * *"
-
-
+  schedule:
+    - cron: "0 */18 * * *"
 jobs:
   build:
     runs-on: ubuntu-latest
