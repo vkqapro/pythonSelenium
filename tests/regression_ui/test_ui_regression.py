@@ -279,8 +279,8 @@ class TestUIRegression(BaseTest):
             active_boards = driver.find_elements(By.XPATH, self.SCC.HomePage.CHECK_ACTIVE_BOARDS)
             active_boards_count = len(active_boards)
             log.info('====' * 50)
-            log.info(active_boards_count - 2)
-            assert active_boards_count - 2 == 0
+            log.info(active_boards_count)
+            assert active_boards_count == 0
 
     @pytest.mark.TC000
     @pytest.mark.TC010
