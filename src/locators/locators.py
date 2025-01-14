@@ -44,8 +44,8 @@ class Locators(object):
         BOARDS_BUTTON = "//nav/div[3]/div/ul/li/ul/li[1]"
 
     class Board:
-        # BOARD_TITLE = "//div[1][@class='boards-page-board-section mod-no-sidebar']/div[2]/ul/li[1]/a/div"
-        BOARD_TITLE = "//*[contains(text(), 'new_board')]"
+        BOARD_TITLE = "//div[1][@class='boards-page-board-section mod-no-sidebar']/div[2]/ul/li[1]/a/div"
+        # BOARD_TITLE = "//*[contains(text(), 'new_board')]"
         ADD_A_LIST_BUTTON = "//*[contains(text(), 'Add a list')]"
         ENTER_LIST_NAME_FIELD = "//*[@name='Enter list name…']"
         ADD_LIST_SUBMIT_BUTTON = "//*[@data-testid='list-composer-add-list-button']"

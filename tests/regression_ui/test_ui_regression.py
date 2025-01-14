@@ -286,7 +286,7 @@ class TestUIRegression(BaseTest):
     @pytest.mark.TC010
     @allure.title('Log out from Trello account')
     def test_log_out(self, driver):
-        time.sleep(5)
+        time.sleep(10)
         with allure.step('Log in to Trello account'):
             self.test_login(driver)
 
