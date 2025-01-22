@@ -48,6 +48,11 @@ jobs:
         echo "Chrome Version: $CHROME_VER"
         CHROME_DRIVER_VER=$(curl --location --request GET "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VER")
         echo "Chrome Driver Version: $CHROME_DRIVER_VER"
+        wget https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VER/chromedriver_linux64.zip
+        unzip chromedriver_linux64.zip
+        sudo mv -f chromedriver /usr/bin/chromedriver
+        sudo chown root:root /usr/bin/chromedriver
+        sudo chmod +x /usr/bin/chromedriver
 
     - name: Run tests
       env:
