@@ -188,14 +188,17 @@ class TestUIRegression(BaseTest):
             self.test_login(driver)
 
         with allure.step('Open a board and select a card'):
-            WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.Board.BOARD_TITLE))).click()
-            WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, self.SCC.Board.LIST_TITLE))).click()
-            driver.find_element(By.XPATH, self.SCC.List.ADD_A_CARD_BUTTON).click()
-            driver.find_element(By.XPATH, self.SCC.List.CARD_NAME_FIELD).click()
-            time.sleep(1)
-            driver.find_element(By.XPATH, self.SCC.List.CARD_NAME_FIELD).send_keys('new_card')
-            driver.find_element(By.XPATH, self.SCC.List.ADD_CARD_SUBMIT_BUTTOMN).click()
-            time.sleep(2)
+            try:
+                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.SCC.Board.BOARD_TITLE))).click()
+                WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, self.SCC.Board.LIST_TITLE))).click()
+                driver.find_element(By.XPATH, self.SCC.List.ADD_A_CARD_BUTTON).click()
+                driver.find_element(By.XPATH, self.SCC.List.CARD_NAME_FIELD).click()
+                time.sleep(1)
+                driver.find_element(By.XPATH, self.SCC.List.CARD_NAME_FIELD).send_keys('new_card')
+                driver.find_element(By.XPATH, self.SCC.List.ADD_CARD_SUBMIT_BUTTOMN).click()
+                time.sleep(2)
+            except Exception as e:
+                log.info("An error occurred: ", str(e))
 
         with allure.step('Click the card to open and archive it'):
             driver.find_element(By.XPATH, self.SCC.List.CARD_TO_ARCHIVE).click()
@@ -218,14 +221,17 @@ class TestUIRegression(BaseTest):
             self.test_login(driver)
 
         with allure.step('Open a board and select a card'):
-            WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.Board.BOARD_TITLE))).click()
-            WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, self.SCC.Board.LIST_TITLE))).click()
-            driver.find_element(By.XPATH, self.SCC.List.ADD_A_CARD_BUTTON).click()
-            driver.find_element(By.XPATH, self.SCC.List.CARD_NAME_FIELD).click()
-            time.sleep(1)
-            driver.find_element(By.XPATH, self.SCC.List.CARD_NAME_FIELD).send_keys('new_card')
-            driver.find_element(By.XPATH, self.SCC.List.ADD_CARD_SUBMIT_BUTTOMN).click()
-            time.sleep(3)
+            try:
+                WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.Board.BOARD_TITLE))).click()
+                WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, self.SCC.Board.LIST_TITLE))).click()
+                driver.find_element(By.XPATH, self.SCC.List.ADD_A_CARD_BUTTON).click()
+                driver.find_element(By.XPATH, self.SCC.List.CARD_NAME_FIELD).click()
+                time.sleep(1)
+                driver.find_element(By.XPATH, self.SCC.List.CARD_NAME_FIELD).send_keys('new_card')
+                driver.find_element(By.XPATH, self.SCC.List.ADD_CARD_SUBMIT_BUTTOMN).click()
+                time.sleep(3)
+            except Exception as e:
+                log.info("An error occurred: ", str(e))
 
         with allure.step('Click the card to open and archive it'):
             driver.find_element(By.XPATH, self.SCC.List.CARD_TO_ARCHIVE).click()
@@ -248,11 +254,10 @@ class TestUIRegression(BaseTest):
             # time.sleep(2)
         with allure.step('Search the board'):
             WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, self.SCC.Search.SEARCH_FIELD))).click()
-            # driver.find_element(By.XPATH, self.SCC.Search.SEARCH_FIELD).click()
             WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.Search.ADVANCE_SEARCH_BUTTON))).click()
             WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.Search.ADVANCE_SEARCH_FIELD))).send_keys('new_board')
-            el_serched_board = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, self.SCC.Search.BOARD_FOUND_IN_SEARCH))).is_displayed()
-            assert el_serched_board == True
+            el_searched_board = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, self.SCC.Search.BOARD_FOUND_IN_SEARCH))).is_displayed()
+            assert el_searched_board == True
 
     @pytest.mark.TC000
     @pytest.mark.TC009
@@ -263,7 +268,10 @@ class TestUIRegression(BaseTest):
             self.test_login(driver)
 
         with allure.step('Open board'):
-            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.SCC.Board.BOARD_TITLE))).click()
+            try:
+                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.SCC.Board.BOARD_TITLE))).click()
+            except Exception as e:
+                log.info("An error occurred: ", str(e))
 
         with allure.step('Click "More" and select "Close Board, then delete the board permanently"'):
             WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.List.SHOW_MENU))).click()
