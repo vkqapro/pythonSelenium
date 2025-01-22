@@ -1,8 +1,9 @@
 name: Python+Selenium with Pytest and Allure reports
 
-on:
-  schedule:
-    - cron: "0 14/12 * * *"
+on: push
+
+#  schedule:
+#    - cron: "0 14/12 * * *"
 jobs:
   build:
     runs-on: ubuntu-latest
