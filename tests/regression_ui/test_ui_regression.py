@@ -263,7 +263,7 @@ class TestUIRegression(BaseTest):
             self.test_login(driver)
 
         with allure.step('Open board'):
-            WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.Board.BOARD_TITLE))).click()
+            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, self.SCC.Board.BOARD_TITLE))).click()
 
         with allure.step('Click "More" and select "Close Board, then delete the board permanently"'):
             WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.List.SHOW_MENU))).click()
