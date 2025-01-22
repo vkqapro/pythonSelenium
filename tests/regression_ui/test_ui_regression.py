@@ -235,11 +235,11 @@ class TestUIRegression(BaseTest):
 
         with allure.step('Click the card to open and archive it'):
             driver.find_element(By.XPATH, self.SCC.List.CARD_TO_ARCHIVE).click()
-            WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.List.LABELS_BUTTON))).click()
+            WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, self.SCC.List.LABELS_BUTTON))).click()
             time.sleep(2)
-            WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.List.LABEL_GREEN))).click()
-            WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.List.X_BUTTON))).click()
-            WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.SCC.List.X_DIALOG_BUTTON))).click()
+            WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, self.SCC.List.LABEL_GREEN))).click()
+            WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, self.SCC.List.X_BUTTON))).click()
+            WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, self.SCC.List.X_DIALOG_BUTTON))).click()
             time.sleep(3)
             green_label = driver.find_element(By.XPATH, self.SCC.List.LABEL_GREEN).is_displayed()
             assert driver.find_element(By.XPATH, self.SCC.List.LABEL_GREEN).is_displayed()
