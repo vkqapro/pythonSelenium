@@ -35,6 +35,11 @@ jobs:
         sudo apt-get update
         sudo apt-get install google-chrome-stable
 
+    - name: Update Google Chrome
+      run: |
+        sudo apt-get update
+        sudo apt-get --only-upgrade install google-chrome-stable
+
     - name: Install ChromeDriver
       run: |
         CHROME_IN_PATH=$(which google-chrome)
