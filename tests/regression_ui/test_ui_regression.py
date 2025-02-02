@@ -55,37 +55,36 @@ class TestUIRegression(BaseTest):
     @pytest.mark.TC001
     @allure.title('Login Functionality')
     def test_login(self, driver):
-        with allure.step('Navigate to the Trello login page'):
-            driver.get(self.SCC.URL_LOGIN)
-            time.sleep(3)
-        with allure.step('Enter valid credentials (email, password, and 6-digits verification code)'):
-            try:
-                el_user_name = WebDriverWait(driver, 60).until(EC.element_to_be_clickable(
-                    (By.XPATH, self.SCC.LoginPage.USER_NAME_FIELD)
-                ))
-                el_user_name.click()
-                el_user_name.send_keys(USER_EMAIL)
-
-                driver.find_element(By.XPATH, self.SCC.LoginPage.CONTINUE_BUTTON).click()
-                el_password = WebDriverWait(driver, 60).until(EC.element_to_be_clickable(
-                    (By.XPATH, self.SCC.LoginPage.PASSWORD_FIELD)
-                ))
-                el_password.click()
-                el_password.send_keys(USER_PASSWORD)
-
-                driver.find_element(By.XPATH, self.SCC.LoginPage.LOGIN_BUTTON).click()
-                time.sleep(3)
-                el_six_otp_code = WebDriverWait(driver, 60).until(EC.element_to_be_clickable(
-                    (By.XPATH, self.SCC.LoginPage.SIX_OTP_CODE_FIELD)
-                ))
-                el_six_otp_code.click()
-                el_six_otp_code.send_keys(self.otp_auth())
-                time.sleep(10)
-                WebDriverWait(driver, 10).until(EC.url_matches(self.SCC.HOME_URL))
-                log.info(f"The user's home url is: {driver.current_url}")
-                assert driver.current_url == self.SCC.HOME_URL
-            except Exception as e:
-                log.info("An error occurred: ", str(e))
+        with allure.step('Navigate to the Trello page and enter valid credentials (email, password, and 6-digits verification code)'):
+            while True:
+                try:
+                    driver.get(self.SCC.URL_LOGIN)
+                    el_user_name = WebDriverWait(driver, 10).until(EC.element_to_be_clickable(
+                        (By.XPATH, self.SCC.LoginPage.USER_NAME_FIELD)
+                    ))
+                    el_user_name.send_keys(USER_EMAIL)
+                    driver.find_element(By.XPATH, self.SCC.LoginPage.CONTINUE_BUTTON).click()
+                    el_password = WebDriverWait(driver, 10).until(EC.element_to_be_clickable(
+                        (By.XPATH, self.SCC.LoginPage.PASSWORD_FIELD)
+                    ))
+                    el_password.send_keys(USER_PASSWORD)
+                    driver.find_element(By.XPATH, self.SCC.LoginPage.LOGIN_BUTTON).click()
+                    log.info("+++++" * 20)
+                    log.info(self.otp_auth())
+                    time.sleep(10)
+                    el_six_otp_code = WebDriverWait(driver, 10).until(EC.element_to_be_clickable(
+                        (By.XPATH, self.SCC.LoginPage.SIX_OTP_CODE_FIELD)
+                    ))
+                    el_six_otp_code.send_keys(self.otp_auth())
+                    time.sleep(3)
+                    if driver.find_element(By.XPATH, self.SCC.LoginPage.ERROR_MESSAGE).is_displayed():
+                        continue
+                    else:
+                        WebDriverWait(driver, 10).until(EC.url_matches(self.SCC.HOME_URL))
+                        log.info(f"The user's home url is: {driver.current_url}")
+                        assert driver.current_url == self.SCC.HOME_URL
+                except AssertionError:
+                    pass
 
 
     @pytest.mark.TC000

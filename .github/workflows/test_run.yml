@@ -1,8 +1,8 @@
 name: Python+Selenium with Pytest and Allure reports
 
-on:
-  schedule:
-    - cron: "0 */3 * * *"
+on: workflow_dispatch
+#  schedule:
+#    - cron: "0 */3 * * *"
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -54,7 +54,7 @@ jobs:
         USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
       run: |
-        pytest -m TC000 --alluredir allure-results
+        pytest -m TC001 --alluredir allure-results
       continue-on-error: true
 
     - name: Copy history from gh-pages to Alullure-results
