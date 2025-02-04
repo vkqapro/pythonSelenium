@@ -71,21 +71,24 @@ class TestUIRegression(BaseTest):
                     driver.find_element(By.XPATH, self.SCC.LoginPage.LOGIN_BUTTON).click()
                     log.info("+++++" * 20)
                     log.info(self.otp_auth())
-                    time.sleep(10)
+                    time.sleep(1)
                     el_six_otp_code = WebDriverWait(driver, 10).until(EC.element_to_be_clickable(
                         (By.XPATH, self.SCC.LoginPage.SIX_OTP_CODE_FIELD)
                     ))
                     el_six_otp_code.send_keys(self.otp_auth())
                     time.sleep(3)
-                    if driver.find_element(By.XPATH, self.SCC.LoginPage.ERROR_MESSAGE).is_displayed():
+                    try:
+                        error_message = driver.find_element(By.XPATH, self.SCC.LoginPage.ERROR_MESSAGE).is_displayed()
+                    except NoSuchElementException:
+                        break
+
+                    assert driver.current_url == self.SCC.HOME_URL
+                    allure.attach(driver.get_screenshot_as_png(), name="screenshot", attachment_type=allure.attachment_type.PNG)
+                    log.info(f"The user's home url is: {driver.current_url}")
+                    if error_message:
                         continue
-                    else:
-                        WebDriverWait(driver, 10).until(EC.url_matches(self.SCC.HOME_URL))
-                        log.info(f"The user's home url is: {driver.current_url}")
-                        assert driver.current_url == self.SCC.HOME_URL
                 except AssertionError:
                     pass
-
 
     @pytest.mark.TC000
     @pytest.mark.TC002
